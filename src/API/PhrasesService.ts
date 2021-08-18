@@ -15,8 +15,7 @@ export default class PhrasesService {
         }
         `
       }
-    });
-       
+    });   
     return response;
   }
 }

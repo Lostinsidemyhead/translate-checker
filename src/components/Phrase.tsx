@@ -1,11 +1,13 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
-const Phrase: FC = () => {
+interface IPhraseProps {
+  phrase: string;
+}
 
-
+const Phrase: FC<IPhraseProps> = ({ phrase }) => {
   return (
     <div>
-
+      {phrase}
     </div>
   )
 }

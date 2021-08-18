@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import WhiteButton from './components/WhiteButton';
-import axios from 'axios';
 import PhrasesService from './API/PhrasesService'
-import { IPhrases } from './types/types';
+import { IPhrase } from './types/types';
+import Phrase from './components/Phrase';
+import GlobalFonts from './fonts/fonts';
+
 
 function App() {
 
-  const [phrases, setPhrases] = useState<IPhrases[]>();
-
-  async function fetchPhrases() {
-    const response = await PhrasesService.getAllSentences();
-    setPhrases([response.data.data.sentenceAll]);
-  }
-
+  const [phrases, setPhrases] = useState<IPhrase[]>([]);
+  
   useEffect(() => {
     fetchPhrases();
   }, []);
 
+  async function fetchPhrases() {
+    const response = await PhrasesService.getAllSentences();
+    setPhrases(response.data?.data?.sentenceAll);      
+  }
+
   const check = () => {
-    console.log(phrases);
+    
   }
 
   return (
     <div>
+       <GlobalFonts />
       <div>Translate this sentence</div>
+
+      <Phrase phrase={phrases[0]?.ru}/>
 
       <WhiteButton onClick={check}>
         Check
