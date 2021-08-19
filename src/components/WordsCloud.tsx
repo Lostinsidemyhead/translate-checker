@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { IWord } from '../types/types';
-import { WordGround } from './styled';
-import Word from './Word';
+import { Spacer, WordDiv, WordGround, WordsField } from './styled';
 
 interface IWordsCloud {
   wordList: IWord[];
@@ -33,7 +32,7 @@ const WordsCloud: FC<IWordsCloud> = ({ wordList }) => {
     console.log("drag start");
     setCurrentWord(word);
   }
-  
+
   function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
     console.log("drag leave");
   }
@@ -67,50 +66,42 @@ const WordsCloud: FC<IWordsCloud> = ({ wordList }) => {
 
   return (
     <div>
-      {/* TEST BLOCK... */}
-      <div
-        style={{ display: "flex", border: "1px dotted grey", width: 484, height: 100, marginBottom: 30 }}
-
+      <WordsField
         onDragLeave={(e) => dragLeaveHandler(e)}
         onDragOver={(e) => dragOverHandler(e)}
         onDragEnd={(e) => dragEndHandler(e)}
         onDrop={(e) => dropHandler(e)}
       >
         {phraseToCheck.map((word, index) =>
-          <div
-            style={{ background: "yellow" }}
+          <WordDiv
             draggable
-
             onDragLeave={(e) => dragLeaveHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDragEnd={(e) => dragEndHandler(e)}
             onDrop={(e) => dropHandler(e, word)}
-
             key={index}
           >
             {word.word}
-          </div>
+          </WordDiv>
         )}
-      </div>
+      </WordsField>
+
+      <Spacer height="50px"/>
       <WordsCloudDiv>
         {wordsArray.map((word, index) =>
-          <div
-            style={{ background: "lightblue" }}
+          <WordDiv
             draggable
-
             onDragStart={(e) => dragStartHandler(e, word)}
             onDragLeave={(e) => dragLeaveHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDragEnd={(e) => dragEndHandler(e)}
-
             key={index}
           >
             {word.word}
-          </div>
+          </WordDiv>
         )
         }
       </WordsCloudDiv >
-      {/* ...TEST BLOCK */}
     </div>
   )
 }

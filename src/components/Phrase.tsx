@@ -27,6 +27,7 @@ const PhraseWrapper = styled.div`
   line-height: 32px;
   text-decoration: underline dotted;
   text-underline-position: under;
+  user-select: none;
 `;
 
 const Phrase: FC<IPhraseProps> = ({ phrase }) => {

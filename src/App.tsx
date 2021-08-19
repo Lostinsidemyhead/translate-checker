@@ -7,7 +7,6 @@ import WordsCloud from './components/WordsCloud';
 import Header from './components/Header';
 import ExampleBlock from './components/ExampleBlock';
 import { AppWrapper, ButtonWrapper, Spacer } from './components/styled';
-import Field from './components/WordsField';
 
 function App() {
   const [phrases, setPhrases] = useState<IPhrase[]>([]);
@@ -44,9 +43,7 @@ function App() {
       <Spacer height="56px;" />
 
       <ExampleBlock examplePhrase={phrases[0]?.ru} />
-      <Spacer height="5px;" />
 
-      <Field />
       <Spacer height="50px;" />
 
       <WordsCloud wordList={getWordList(phrases[0]?.en)} />
