@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Field = () => {
+const WordsField = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Field = () => {
   )
 }
 
-export default Field;
+export default WordsField;

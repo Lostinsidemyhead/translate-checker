@@ -1,23 +1,31 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
+interface IWordProps {
+  onDragStart: React.DragEvent<HTMLDivElement>;
+  onDragLeave: React.DragEvent<HTMLDivElement>;
+  onDragOver: React.DragEvent<HTMLDivElement>;
+  onDragEnd: React.DragEvent<HTMLDivElement>;
+  onDrop: React.DragEvent<HTMLDivElement>;
+}
+
 const WordDiv = styled.div`
-  border: 1px solid #c9c9c9;
-  box-shadow: 0px 8px 4px -6px rgba(34, 60, 80, 0.25);
+  height: 28px;
+  width: 68px;
   background: #FFFFFF;
-  border: 1px solid #C9C9C9;
+  border: 1px solid #c9c9c9;
   border-radius: 13px;
-  text-align: center;
+  box-shadow: 0px 8px 4px -6px rgba(34, 60, 80, 0.25);
   font-family: Roboto-Regular;
+  text-align: center;
   font-size: 18px;
-  padding-top: 6px;
-  min-width: 70px;
-  height: 30px;
+  line-height: 28px;
+  z-index: 10;
 `;
 
-const Word: FC = ({ children }) => {
+const Word: FC = ({ children, ...props }) => {
   return (
-    <WordDiv>
+    <WordDiv draggable={true} {...props}>
       {children}
     </WordDiv>
   )

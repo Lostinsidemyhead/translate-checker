@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
 import WhiteButton from './components/WhiteButton';
 import PhrasesService from './API/PhrasesService'
-import { IPhrase } from './types/types';
+import { IPhrase, IWord } from './types/types';
 import GlobalFonts from './fonts/fonts';
 import WordsCloud from './components/WordsCloud';
-import styled from 'styled-components';
 import Header from './components/Header';
 import ExampleBlock from './components/ExampleBlock';
-import { Spacer } from './components/Spacer';
-import Field from './components/Field';
-
-const AppWrapper = styled.div`
-  max-width: 484px;
-  margin: auto;
-`;
+import { AppWrapper, ButtonWrapper, Spacer } from './components/styled';
+import Field from './components/WordsField';
 
 function App() {
   const [phrases, setPhrases] = useState<IPhrase[]>([]);
@@ -27,9 +21,16 @@ function App() {
     setPhrases(response.data?.data?.sentenceAll);
   }
 
-  const getWordList = (phrase: string): string[] => {
+  const getWordList = (phrase: string): IWord[] => {
     if (!phrase) return [];
-    const wordList = phrase.split(" ").sort();
+
+    const words = phrase.split(" ").sort();
+    let wordList: Array<IWord> = [];
+    for (let i = 0; i < words.length; i++) {
+      const word: IWord = {id: i, word: words[i]}
+      wordList.push(word);
+    }
+
     return wordList;
   }
 
@@ -40,20 +41,22 @@ function App() {
     <AppWrapper>
       <GlobalFonts />
       <Header />
-      <Spacer height="56px;"/>
-      
-      <ExampleBlock examplePhrase={phrases[0]?.ru}/>
-      <Spacer height="4.5px;"/>
+      <Spacer height="56px;" />
 
-      <Field/>
-      <Spacer height="50px;"/>
-      
+      <ExampleBlock examplePhrase={phrases[0]?.ru} />
+      <Spacer height="5px;" />
+
+      <Field />
+      <Spacer height="50px;" />
+
       <WordsCloud wordList={getWordList(phrases[0]?.en)} />
-      <Spacer height="79px;"/>
-      
-      <WhiteButton onClick={check}>
-        Check
-      </WhiteButton>
+      <Spacer height="79px;" />
+
+      <ButtonWrapper>
+        <WhiteButton onClick={check}>
+          Check
+        </WhiteButton>
+      </ButtonWrapper>
     </AppWrapper>
   );
 }
