@@ -6,21 +6,37 @@ interface IPhraseProps {
   phrase: string;
 }
 
-const PhraseWrapper = styled.div`
+const PhraseBorder = styled.div`
   background-image: url(${phraseBorder});
+  background-repeat: no-repeat;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   height: 92px;
-  width: 306px;
+  width: 307px;
+  margin-left: -12px;
+  margin-top: -8px;
+`;
+
+const PhraseWrapper = styled.div`
+  margin-left: 43px;
   font-family: Roboto-Regular;
   font-style: normal;
   font-size: 18px;
-  line-height: 21px;
+  line-height: 32px;
+  text-decoration: underline dotted;
+  text-underline-position: under;
 `;
 
 const Phrase: FC<IPhraseProps> = ({ phrase }) => {
+  
   return (
-    <PhraseWrapper>
+    <PhraseBorder>
+      <PhraseWrapper>
       {phrase}
-    </PhraseWrapper>
+      </PhraseWrapper>
+    </PhraseBorder>
   )
 }
 
