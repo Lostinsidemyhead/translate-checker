@@ -14,6 +14,7 @@ export const ButtonWrapper = styled.div`
 export const AppWrapper = styled.div`
   max-width: 484px;
   margin: auto;
+  margin-top: 10%;
 `;
 
 export const WordGround = styled.div`

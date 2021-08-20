@@ -14,7 +14,10 @@ function App() {
   const [fields, setFields] = useState<IField[]>([]);
   const [currentField, setCurrentField] = useState<IField>();
   const [currentWord, setCurrentWord] = useState<IWord>();
+  
   const [buttonState, setButtonState] = useState<boolean>(false);
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
 
   useEffect(() => {
     fetchPhrases();
@@ -54,22 +57,17 @@ function App() {
   }
 
   const check = () => {
+    setShowNotification(true);
 
     const words = fields[0].words.map((word) => {
       return word.word;
     });
 
     if (currentPhrase.en === words.join(' ')) {
-      console.log(currentPhrase.en);
-      console.log(words.join(' '));
-
-      console.log("Верно");
+      setIsAnswerCorrect(true);
     }
     else {
-      console.log(currentPhrase.en);
-      console.log(words.join(' '));
-
-      console.log("Не верно");
+      setIsAnswerCorrect(false);
     }
   }
 
@@ -77,6 +75,7 @@ function App() {
   function dragStartHandler(e: React.DragEvent<HTMLDivElement>, field: IField, word: IWord) {
     setCurrentField(field);
     setCurrentWord(word);
+    setShowNotification(false);
   }
 
   function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
@@ -177,6 +176,16 @@ function App() {
       {/* ... DND BLOCK VERSION*/}
 
       <Spacer height="79px;" />
+      {showNotification &&
+        <div>
+          {isAnswerCorrect
+          ?
+          <div>Верно</div>
+          :
+          <div>Не верно</div>
+          }
+        </div>
+      }
       <ButtonWrapper>
         <WhiteButton isEnable={buttonState} onClick={check}>
           Check
