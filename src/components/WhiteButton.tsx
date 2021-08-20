@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 interface WhiteButtonProps {
   onClick: () => void;
+  isEnable: boolean;
 }
 
-const Button = styled.button`
+const Button = styled.button<WhiteButtonProps>`
   width: 470px;
   height: 68px;
   padding: 24px;
@@ -23,11 +24,12 @@ const Button = styled.button`
     box-shadow: inset -2px -4px 12px #FFFFFF, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
   }
   margin: auto;
+  color:  ${props => props.isEnable ? "#000000" : "#00000034"};
 `;
 
 const WhiteButton: FC<WhiteButtonProps> = ({ children, ...props }) => {
   return (
-    <Button {...props}>
+    <Button disabled={!props.isEnable} {...props}>
       {children}
     </Button>
   )

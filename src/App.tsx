@@ -14,10 +14,20 @@ function App() {
   const [fields, setFields] = useState<IField[]>([]);
   const [currentField, setCurrentField] = useState<IField>();
   const [currentWord, setCurrentWord] = useState<IWord>();
+  const [buttonState, setButtonState] = useState<boolean>(false);
 
   useEffect(() => {
     fetchPhrases();
   }, []);
+
+  useEffect(() => {
+    if (fields[0]?.words.length > 0) {
+      setButtonState(true);
+    }
+    else {
+      setButtonState(false);
+    }
+  }, [fields[0]?.words.length]);
 
   const getWordList = (phrase: string): IWord[] => {
     if (!phrase) return [];
@@ -45,20 +55,20 @@ function App() {
 
   const check = () => {
 
-    const words = fields[0].words.map((word)=>{
+    const words = fields[0].words.map((word) => {
       return word.word;
-    }); 
+    });
 
-    if(currentPhrase.en === words.join(' ')){
+    if (currentPhrase.en === words.join(' ')) {
       console.log(currentPhrase.en);
       console.log(words.join(' '));
-      
+
       console.log("Верно");
-    } 
+    }
     else {
       console.log(currentPhrase.en);
       console.log(words.join(' '));
-      
+
       console.log("Не верно");
     }
   }
@@ -67,7 +77,6 @@ function App() {
   function dragStartHandler(e: React.DragEvent<HTMLDivElement>, field: IField, word: IWord) {
     setCurrentField(field);
     setCurrentWord(word);
-
   }
 
   function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
@@ -141,7 +150,7 @@ function App() {
           {fields.map((field, name) =>
             <WordsField
               key={field.name}
-              
+
               onDragOver={(e) => dragOverHandler(e)}
               onDrop={(e) => dropOnEmptyFieldHandler(e, field)}
             >
@@ -169,7 +178,7 @@ function App() {
 
       <Spacer height="79px;" />
       <ButtonWrapper>
-        <WhiteButton onClick={check}>
+        <WhiteButton isEnable={buttonState} onClick={check}>
           Check
         </WhiteButton>
       </ButtonWrapper>
