@@ -44,6 +44,23 @@ function App() {
   }
 
   const check = () => {
+
+    const words = fields[0].words.map((word)=>{
+      return word.word;
+    }); 
+
+    if(currentPhrase.en === words.join(' ')){
+      console.log(currentPhrase.en);
+      console.log(words.join(' '));
+      
+      console.log("Верно");
+    } 
+    else {
+      console.log(currentPhrase.en);
+      console.log(words.join(' '));
+      
+      console.log("Не верно");
+    }
   }
 
   //DND BLOCK VERSION...
@@ -90,7 +107,6 @@ function App() {
   function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: IField) {
 
     if (!currentWord || !currentField) return;
-    
     if (field.words.includes(currentWord)) return;
 
     field.words.push(currentWord);
