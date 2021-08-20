@@ -1,10 +1,8 @@
-import React from "react";
-import styled, { StyledComponent } from "styled-components";
+import styled from "styled-components";
 
 interface ISpacerProps {
   height: string;
 }
-
 export const Spacer = styled.div<ISpacerProps>`
   height: ${props => props.height};
 `;
@@ -45,5 +43,5 @@ export const WordsField = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-column-gap: 10px;
-  padding: 6px;
+  padding: 7px;
 `;
