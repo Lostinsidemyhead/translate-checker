@@ -39,7 +39,10 @@ export const WordDiv = styled.div`
   cursor: pointer;
 `;
 
-export const WordsField = styled.div`
+interface WordsFieldStyle {
+  borders: boolean;
+}
+export const WordsField = styled.div<WordsFieldStyle>`
   height: 90px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);

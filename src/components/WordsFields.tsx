@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { IField, IPhrase, IWord } from '../types/types';
+import { getWordList } from '../utils/utils';
 import { WordDiv, WordsField } from './styled';
 
 interface WordsFieldsProps {
   phrase: IPhrase;
   updateUserAnswer(words: Array<IWord>): void;
   updateButtonEnabled(isEnabled: boolean): void;
-  updateShowingNotification(show: boolean) : void;
+  updateShowingNotification(show: boolean): void;
 }
 
-const WordsFields: React.FC<WordsFieldsProps> = ({phrase, updateUserAnswer, updateButtonEnabled, updateShowingNotification}) => {
+const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
   const [fields, setFields] = useState<IField[]>([]);
   const [currentField, setCurrentField] = useState<IField>();
   const [currentWord, setCurrentWord] = useState<IWord>();
@@ -20,18 +21,6 @@ const WordsFields: React.FC<WordsFieldsProps> = ({phrase, updateUserAnswer, upda
       { name: "origin", words: getWordList(phrase.en) }
     ]);
   }, [phrase]);
-
-  const getWordList = (phrase: string): IWord[] => {
-    if (!phrase) return [];
-
-    const words = phrase.split(" ").sort();
-    let wordList: Array<IWord> = [];
-    for (let i = 0; i < words.length; i++) {
-      const word: IWord = { id: i, word: words[i] }
-      wordList.push(word);
-    }
-    return wordList;
-  }
 
   useEffect(() => {
     updateUserAnswer(fields[0]?.words);
@@ -103,6 +92,7 @@ const WordsFields: React.FC<WordsFieldsProps> = ({phrase, updateUserAnswer, upda
         <div>
           {fields.map((field, name) =>
             <WordsField
+              borders={field.name === "new"}
               key={field.name}
               onDragOver={(e) => dragOverHandler(e)}
               onDrop={(e) => dropOnEmptyFieldHandler(e, field)}
