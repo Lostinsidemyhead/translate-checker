@@ -46,3 +46,16 @@ export const WordsField = styled.div`
   grid-column-gap: 10px;
   padding: 7px;
 `;
+
+interface INotifyProps {
+  isAnswerCorrect: boolean;
+}
+export const Notification = styled.div<INotifyProps>`
+  font-family: Roboto-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: ${props => props.isAnswerCorrect ? "#03C03C" : "#FF0000"};
+`;

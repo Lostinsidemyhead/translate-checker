@@ -5,7 +5,7 @@ import { IField, IPhrase, IWord } from './types/types';
 import GlobalFonts from './fonts/fonts';
 import Header from './components/Header';
 import ExampleBlock from './components/ExampleBlock';
-import { AppWrapper, ButtonWrapper, Spacer, WordDiv, WordsField } from './components/styled';
+import { AppWrapper, ButtonWrapper, Notification, Spacer, WordDiv, WordsField } from './components/styled';
 
 function App() {
   const [phrases, setPhrases] = useState<IPhrase[]>([]);
@@ -14,7 +14,7 @@ function App() {
   const [fields, setFields] = useState<IField[]>([]);
   const [currentField, setCurrentField] = useState<IField>();
   const [currentWord, setCurrentWord] = useState<IWord>();
-  
+
   const [buttonState, setButtonState] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
@@ -58,7 +58,7 @@ function App() {
 
   const check = () => {
     setShowNotification(true);
-
+    phraseToSpeech();
     const words = fields[0].words.map((word) => {
       return word.word;
     });
@@ -113,7 +113,6 @@ function App() {
   }
 
   function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: IField) {
-
     if (!currentWord || !currentField) return;
     if (field.words.includes(currentWord)) return;
 
@@ -133,6 +132,14 @@ function App() {
   }
 
   //...DND BLOCK VERSION
+  function phraseToSpeech() {
+    let synth = window.speechSynthesis;
+    if (synth.speaking) return;
+    let msg = new SpeechSynthesisUtterance();
+    msg.voice = speechSynthesis.getVoices().filter(voice => voice.name === 'Google UK English Male')[0];
+    msg.text = currentPhrase.en;
+    speechSynthesis.speak(msg);
+  }
 
   return (
     <AppWrapper>
@@ -157,7 +164,6 @@ function App() {
                 <WordDiv
                   key={word.id}
                   draggable
-
                   onDragStart={(e) => dragStartHandler(e, field, word)}
                   onDragLeave={(e) => dragLeaveHandler(e)}
                   onDragOver={(e) => dragOverHandler(e)}
@@ -171,20 +177,21 @@ function App() {
           )}
         </div>
         :
-        <div>Loading</div>
+        <div>Loading...</div>
       }
       {/* ... DND BLOCK VERSION*/}
 
-      <Spacer height="79px;" />
-      {showNotification &&
+      {showNotification
+        ?
         <div>
-          {isAnswerCorrect
-          ?
-          <div>Верно</div>
-          :
-          <div>Не верно</div>
-          }
+          <Spacer height="57px;" />
+          <Notification isAnswerCorrect={isAnswerCorrect}>
+            {isAnswerCorrect ? "You're right!" : "Something wrong!"}
+          </Notification>
+          <Spacer height="27px;" />
         </div>
+        :
+        <Spacer height="79px;" />
       }
       <ButtonWrapper>
         <WhiteButton isEnable={buttonState} onClick={check}>
