@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-interface ISpacerProps {
+interface SpacerProps {
   height: string;
 }
-export const Spacer = styled.div<ISpacerProps>`
+export const Spacer = styled.div<SpacerProps>`
   height: ${props => props.height};
 `;
 
@@ -47,15 +47,3 @@ export const WordsField = styled.div`
   padding: 7px;
 `;
 
-interface INotifyProps {
-  isAnswerCorrect: boolean;
-}
-export const Notification = styled.div<INotifyProps>`
-  font-family: Roboto-Regular;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 28px;
-  text-align: center;
-  color: ${props => props.isAnswerCorrect ? "#03C03C" : "#FF0000"};
-`;

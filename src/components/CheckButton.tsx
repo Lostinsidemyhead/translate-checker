@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { ButtonWrapper } from './styled';
 
-interface WhiteButtonProps {
+interface CheckButtonProps {
   onClick: () => void;
   isEnable: boolean;
 }
 
-const Button = styled.button<WhiteButtonProps>`
+const Button = styled.button<CheckButtonProps>`
   width: 470px;
   height: 68px;
   padding: 24px;
@@ -27,14 +28,16 @@ const Button = styled.button<WhiteButtonProps>`
   color:  ${props => props.isEnable ? "#000000" : "#00000034"};
 `;
 
-const WhiteButton: FC<WhiteButtonProps> = ({ children, ...props }) => {
+const CheckButton: FC<CheckButtonProps> = ({ ...props }) => {
   return (
-    <Button disabled={!props.isEnable} {...props}>
-      {children}
-    </Button>
+    <ButtonWrapper>
+      <Button disabled={!props.isEnable} {...props}>
+        Check
+      </Button>
+    </ButtonWrapper>
   )
 }
 
-export default WhiteButton;
+export default CheckButton;
 
 

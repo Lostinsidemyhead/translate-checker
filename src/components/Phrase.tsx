@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import phraseBorder from '../images/phrase.svg'
 
-interface IPhraseProps {
+interface PhraseProps {
   phrase: string;
 }
 
@@ -30,7 +30,7 @@ const PhraseWrapper = styled.div`
   user-select: none;
 `;
 
-const Phrase: FC<IPhraseProps> = ({ phrase }) => {
+const Phrase: FC<PhraseProps> = ({ phrase }) => {
   
   return (
     <PhraseBorder>
