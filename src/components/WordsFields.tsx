@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IField, IPhrase, IWord } from '../types/types';
 import { getWordList } from '../utils/utils';
-import { WordDiv, WordsField } from './styled';
+import { Spacer, UserField, WordDiv, OriginField, Lines } from './styled';
 
 interface WordsFieldsProps {
   phrase: IPhrase;
@@ -90,14 +90,52 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
       {phrase
         ?
         <div>
-          {fields.map((field, name) =>
+          <Lines>
+            <UserField
+              onDragOver={(e) => dragOverHandler(e)}
+              onDrop={(e) => dropOnEmptyFieldHandler(e, fields[0])}>
+              {fields[0]?.words.map((word) =>
+                <WordDiv
+                  key={word.id}
+                  draggable
+                  onDragStart={(e) => dragStartHandler(e, fields[0], word)}
+                  onDragLeave={(e) => dragLeaveHandler(e)}
+                  onDragOver={(e) => dragOverHandler(e)}
+                  onDragEnd={(e) => dragEndHandler(e)}
+                  onDrop={(e) => dropHandler(e, fields[0], word)}
+                >
+                  {word.word}
+                </WordDiv>
+              )}
+            </UserField>
+          </Lines>
+
+          <Spacer height="50px" />
+          <OriginField
+            onDragOver={(e) => dragOverHandler(e)}
+            onDrop={(e) => dropOnEmptyFieldHandler(e, fields[1])}>
+            {fields[1]?.words.map((word) =>
+              <WordDiv
+                key={word.id}
+                draggable
+                onDragStart={(e) => dragStartHandler(e, fields[1], word)}
+                onDragLeave={(e) => dragLeaveHandler(e)}
+                onDragOver={(e) => dragOverHandler(e)}
+                onDragEnd={(e) => dragEndHandler(e)}
+                onDrop={(e) => dropHandler(e, fields[1], word)}
+              >
+                {word.word}
+              </WordDiv>
+            )}
+          </OriginField>
+          {/* {fields.map((field) =>
             <WordsField
               borders={field.name === "new"}
               key={field.name}
               onDragOver={(e) => dragOverHandler(e)}
               onDrop={(e) => dropOnEmptyFieldHandler(e, field)}
             >
-              {field.words.map((word, id) =>
+              {field.words.map((word) =>
                 <WordDiv
                   key={word.id}
                   draggable
@@ -111,7 +149,7 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
                 </WordDiv>
               )}
             </WordsField>
-          )}
+          )} */}
         </div>
         :
         <div>Loading...</div>
@@ -120,4 +158,4 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
   )
 }
 
-export default WordsFields
+export default WordsFields;

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import './styles/styles.css';
 import PhrasesService from './API/PhrasesService';
+import CheckButton from './components/CheckButton';
 import ExampleBlock from './components/ExampleBlock';
 import Header from './components/Header';
 import Notification from './components/Notification';
-import { AppWrapper, Spacer } from './components/styled';
-import CheckButton from './components/CheckButton';
+import { AppWrapper, GlobalStyle, Spacer } from './components/styled';
 import WordsFields from './components/WordsFields';
 import GlobalFonts from './fonts/fonts';
 import { IPhrase, IWord } from './types/types';
@@ -58,15 +57,17 @@ function App() {
     let msg = new SpeechSynthesisUtterance(currentPhrase.en);
     msg.voice = voices.filter(voice => voice.name === 'Google UK English Male')[0];
     speechSynthesis.speak(msg);
-    
+
     msg.onend = function (e) {
       setCurrentPhrase(phrases[phraseCounter + 1]);
       setPhraseCounter(phraseCounter + 1);
+      updateShowingNotification(false);
     }
   }
 
   return (
     <AppWrapper>
+      <GlobalStyle />
       <GlobalFonts />
       <Header />
       <Spacer height="56px;" />
