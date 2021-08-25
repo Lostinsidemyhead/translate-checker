@@ -1,67 +1,62 @@
 import { useEffect, useState } from 'react';
-import PhrasesService from './API/PhrasesService';
-import CheckButton from './components/CheckButton';
+import SentencesService from './api/SentencesService';
+import Button from './components/Button';
 import ExampleBlock from './components/ExampleBlock';
 import Header from './components/Header';
 import Notification from './components/Notification';
 import { AppWrapper, GlobalStyle, Spacer } from './components/styled';
 import WordsFields from './components/WordsFields';
+import { SENTENCES_FETCH_URL } from './config';
 import GlobalFonts from './fonts/fonts';
-import { IPhrase, IWord } from './types/types';
+import { Sentence, Word } from './types/types';
+import { speechSentence } from './utils/utils';
 
 function App() {
-  const [phrases, setPhrases] = useState<IPhrase[]>([]);
-  const [currentPhrase, setCurrentPhrase] = useState<IPhrase>({ ru: "", en: "" });
-  const [phraseCounter, setPhraseCounter] = useState<number>(0);
+  const [sentences, setSentences] = useState<Sentence[]>([]);
+  const [currentSentence, setCurrentSentence] = useState<Sentence>({ ru: "", en: "" });
+  const [sentenceCounter, setSentenceCounter] = useState<number>(0);
 
   const [buttonEnabled, setButtonEnabled] = useState<boolean>(false);
-  const [userAnswer, setUserAnswer] = useState<IWord[]>([]);
+  const [userAnswer, setUserAnswer] = useState<Word[]>([]);
 
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean>(false);
 
-  const synth = window.speechSynthesis;
+  const speaker = window.speechSynthesis;
 
   useEffect(() => {
-    fetchPhrases();
+    fetchSentences();
   }, []);
 
-  async function fetchPhrases() {
-    const response = await PhrasesService.getAllSentences();
-    setPhrases(response.data?.data?.sentenceAll);
-    setCurrentPhrase(response.data?.data?.sentenceAll[phraseCounter]);
+  async function fetchSentences() {
+    const sentencesService = new SentencesService(SENTENCES_FETCH_URL);
+    const sentencesAll = await sentencesService.getAllSentences();
+    setSentences(sentencesAll);
+    setCurrentSentence(sentencesAll[sentenceCounter]);
   }
 
-  const updateUserAnswer = (words: IWord[]) => { setUserAnswer(words); }
+  const updateUserAnswer = (words: Word[]) => { setUserAnswer(words); }
   const updateButtonEnabled = (isEnabled: boolean) => { setButtonEnabled(isEnabled); }
   const updateShowingNotification = (showNotification: boolean) => { setShowNotification(showNotification); }
 
-  const check = () => {
+  const check = async () => {
     setShowNotification(true);
     const words = userAnswer.map((word) => {
       return word.word;
     });
 
-    if (currentPhrase.en === words.join(' ')) {
+    const resultIsCorrect = currentSentence.en === words.join(' ');
+    if (resultIsCorrect) {
       setIsAnswerCorrect(true);
-      speechPhrase();
+
+      await speechSentence(currentSentence.en, speaker);
+
+      setCurrentSentence(sentences[sentenceCounter + 1]);
+      setSentenceCounter(sentenceCounter + 1);
+      updateShowingNotification(false);
     }
     else {
       setIsAnswerCorrect(false);
-    }
-  }
-
-  function speechPhrase() {
-    if (synth.speaking) return;
-    let voices = speechSynthesis.getVoices();
-    let msg = new SpeechSynthesisUtterance(currentPhrase.en);
-    msg.voice = voices.filter(voice => voice.name === 'Google UK English Male')[0];
-    speechSynthesis.speak(msg);
-
-    msg.onend = function (e) {
-      setCurrentPhrase(phrases[phraseCounter + 1]);
-      setPhraseCounter(phraseCounter + 1);
-      updateShowingNotification(false);
     }
   }
 
@@ -69,24 +64,24 @@ function App() {
     <AppWrapper>
       <GlobalStyle />
       <GlobalFonts />
-      <Header />
+      <Header>
+        Translate this sentence
+      </Header>
       <Spacer height="56px;" />
-
-      <ExampleBlock phrase={phrases[phraseCounter]?.ru} />
+      <ExampleBlock phrase={sentences[sentenceCounter]?.ru} />
       <Spacer height="50px;" />
-
       <WordsFields
-        phrase={currentPhrase}
+        sentence={currentSentence}
         updateUserAnswer={updateUserAnswer}
         updateButtonEnabled={updateButtonEnabled}
         updateShowingNotification={updateShowingNotification}
       />
-
       {showNotification
         ? <Notification isValid={isAnswerCorrect} />
         : <Spacer height="79px;" />}
-
-      <CheckButton isEnable={buttonEnabled} onClick={check} />
+      <Button isEnable={buttonEnabled} onClick={check}>
+        Check
+      </Button>
     </AppWrapper>
   );
 }

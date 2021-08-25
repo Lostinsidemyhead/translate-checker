@@ -1,14 +1,14 @@
-export interface IPhrase {
+export interface Sentence {
   ru: string;
   en: string;
 }
 
-export interface IWord {
+export interface Word {
   id: number;
   word: string;
 } 
 
-export interface IField {
+export interface Field {
   name: string;
-  words: IWord[];
+  words: Word[];
 }

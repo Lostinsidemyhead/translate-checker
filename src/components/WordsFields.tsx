@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { IField, IPhrase, IWord } from '../types/types';
+import { Field, Sentence, Word } from '../types/types';
 import { getWordList } from '../utils/utils';
 import { Spacer, UserField, WordDiv, OriginField, Lines } from './styled';
 
 interface WordsFieldsProps {
-  phrase: IPhrase;
-  updateUserAnswer(words: Array<IWord>): void;
+  sentence: Sentence;
+  updateUserAnswer(words: Array<Word>): void;
   updateButtonEnabled(isEnabled: boolean): void;
   updateShowingNotification(show: boolean): void;
 }
 
-const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
-  const [fields, setFields] = useState<IField[]>([]);
-  const [currentField, setCurrentField] = useState<IField>();
-  const [currentWord, setCurrentWord] = useState<IWord>();
+const WordsFields: React.FC<WordsFieldsProps> = ({ sentence: sentence, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
+  const [fields, setFields] = useState<Field[]>([]);
+  const [sourceField, setSourceField] = useState<Field>();
+  const [currentWord, setCurrentWord] = useState<Word>();
 
   useEffect(() => {
     setFields([
       { name: "new", words: [] },
-      { name: "origin", words: getWordList(phrase.en) }
+      { name: "origin", words: getWordList(sentence.en) }
     ]);
-  }, [phrase]);
+  }, [sentence]);
 
   useEffect(() => {
     updateUserAnswer(fields[0]?.words);
     updateButtonEnabled(fields[0]?.words.length > 0);
   }, [fields[0]?.words.length]);
 
-  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, field: IField, word: IWord) {
-    setCurrentField(field);
+  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, field: Field, word: Word) {
+    setSourceField(field);
     setCurrentWord(word);
     updateShowingNotification(false);
   }
@@ -45,41 +45,41 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
 
   }
 
-  function dropHandler(e: React.DragEvent<HTMLDivElement>, field: IField, word: IWord) {
+  function dropHandler(e: React.DragEvent<HTMLDivElement>, targetField: Field, hoveredWord: Word) {
     e.preventDefault();
-    if (!currentWord || !currentField) return;
+    if (!currentWord || !sourceField) return;
 
-    const currentIndex = currentField.words.indexOf(currentWord);
-    currentField.words.splice(currentIndex, 1);
+    const currentIndex = sourceField.words.indexOf(currentWord);
+    sourceField.words.splice(currentIndex, 1);
 
-    const underCurrentIndex = field.words.indexOf(word);
-    field.words.splice(underCurrentIndex + 1, 0, currentWord);
+    const underCurrentIndex = targetField.words.indexOf(hoveredWord);
+    targetField.words.splice(underCurrentIndex + 1, 0, currentWord);
 
     setFields(fields.map(itField => {
-      if (itField.name === field.name) {
-        return field;
+      if (itField.name === targetField.name) {
+        return targetField;
       }
-      if (itField.name === currentField.name) {
-        return currentField;
+      if (itField.name === sourceField.name) {
+        return sourceField;
       }
       return itField;
     }));
   }
 
-  function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: IField) {
-    if (!currentWord || !currentField) return;
+  function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: Field) {
+    if (!currentWord || !sourceField) return;
     if (field.words.includes(currentWord)) return;
 
     field.words.push(currentWord);
-    const currentIndex = currentField.words.indexOf(currentWord);
-    currentField.words.splice(currentIndex, 1);
+    const currentIndex = sourceField.words.indexOf(currentWord);
+    sourceField.words.splice(currentIndex, 1);
 
     setFields(fields.map(itField => {
       if (itField.name === field.name) {
         return field;
       }
-      if (itField.name === currentField.name) {
-        return currentField;
+      if (itField.name === sourceField.name) {
+        return sourceField;
       }
       return itField;
     }));
@@ -87,7 +87,7 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
 
   return (
     <div>
-      {phrase
+      {sentence
         ?
         <div>
           <Lines>
@@ -128,28 +128,6 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ phrase, updateUserAnswer, upd
               </WordDiv>
             )}
           </OriginField>
-          {/* {fields.map((field) =>
-            <WordsField
-              borders={field.name === "new"}
-              key={field.name}
-              onDragOver={(e) => dragOverHandler(e)}
-              onDrop={(e) => dropOnEmptyFieldHandler(e, field)}
-            >
-              {field.words.map((word) =>
-                <WordDiv
-                  key={word.id}
-                  draggable
-                  onDragStart={(e) => dragStartHandler(e, field, word)}
-                  onDragLeave={(e) => dragLeaveHandler(e)}
-                  onDragOver={(e) => dragOverHandler(e)}
-                  onDragEnd={(e) => dragEndHandler(e)}
-                  onDrop={(e) => dropHandler(e, field, word)}
-                >
-                  {word.word}
-                </WordDiv>
-              )}
-            </WordsField>
-          )} */}
         </div>
         :
         <div>Loading...</div>

@@ -1,15 +1,11 @@
 import { FC } from 'react';
 import Phrase from './Phrase';
 import man from '../images/man.svg';
-import styled from 'styled-components';
+import { ExampleBlockDiv } from './styled';
 
 interface ExampleBlockProps {
   phrase: string;
 }
-
-const ExampleBlockDiv = styled.div`
-  display: flex;
-`;
 
 const ExampleBlock: FC<ExampleBlockProps> = ({phrase}) => {
   return (

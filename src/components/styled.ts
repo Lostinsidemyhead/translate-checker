@@ -91,3 +91,58 @@ export const OriginField = styled.div`
     border-radius: 13px;
   }
 `;
+
+interface ButtonProps {
+  isEnable: boolean;
+}
+
+export const ButtonDiv = styled.button<ButtonProps>`
+  width: 470px;
+  height: 68px;
+  padding: 24px;
+  background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);  
+  box-shadow: -2px -4px 12px #FFFFFF, 2px 4px 8px rgba(0, 0, 0, 0.2);  
+  border: none;
+  border-radius: 88px;
+  font-family: Roboto-Bold;
+  line-height: 21px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);
+    box-shadow: inset -2px -4px 12px #FFFFFF, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  margin: auto;
+  color:  ${props => props.isEnable ? "#000000" : "#00000034"};
+`;
+
+export const ExampleBlockDiv = styled.div`
+  display: flex;
+`;
+
+export const HeaderDiv = styled.div`
+  font-family: Roboto-Bold;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 42px;
+  color: #252525;
+  text-shadow: -2px -4px 3px #FFFFFF, 2px 4px 3px rgba(0, 0, 0, 0.25);
+`;
+
+interface NotificationProps {
+  isValid: boolean;
+}
+
+export const NotificationWrapper = styled.div<NotificationProps>`
+  font-family: Roboto-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: ${props => props.isValid ? "#03C03C" : "#FF0000"};
+  text-shadow:  ${props => props.isValid
+    ? "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(91, 13, 13, 0.5)"
+    : "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(13, 91, 55, 0.5)"};
+`;

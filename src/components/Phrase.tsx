@@ -31,11 +31,10 @@ const PhraseWrapper = styled.div`
 `;
 
 const Phrase: FC<PhraseProps> = ({ phrase }) => {
-  
   return (
     <PhraseBorder>
       <PhraseWrapper>
-      {phrase}
+        {phrase}
       </PhraseWrapper>
     </PhraseBorder>
   )
