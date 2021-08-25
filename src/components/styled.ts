@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import phraseBorder from '../images/phrase.svg';
 
 export const GlobalStyle = createGlobalStyle`
     html {
@@ -145,4 +146,28 @@ export const NotificationWrapper = styled.div<NotificationProps>`
   text-shadow:  ${props => props.isValid
     ? "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(91, 13, 13, 0.5)"
     : "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(13, 91, 55, 0.5)"};
+`;
+
+export const PhraseBorder = styled.div`
+  background-image: url(${phraseBorder});
+  background-repeat: no-repeat;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 92px;
+  width: 307px;
+  margin-left: -12px;
+  margin-top: -8px;
+`;
+
+export const PhraseWrapper = styled.div`
+  margin-left: 43px;
+  font-family: Roboto-Regular;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 32px;
+  text-decoration: underline dotted;
+  text-underline-position: under;
+  user-select: none;
 `;

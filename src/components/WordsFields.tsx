@@ -10,7 +10,7 @@ interface WordsFieldsProps {
   updateShowingNotification(show: boolean): void;
 }
 
-const WordsFields: React.FC<WordsFieldsProps> = ({ sentence: sentence, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
+const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
   const [fields, setFields] = useState<Field[]>([]);
   const [sourceField, setSourceField] = useState<Field>();
   const [currentWord, setCurrentWord] = useState<Word>();

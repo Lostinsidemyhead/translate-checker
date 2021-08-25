@@ -4,10 +4,10 @@ import man from '../images/man.svg';
 import { ExampleBlockDiv } from './styled';
 
 interface ExampleBlockProps {
-  phrase: string;
+  sentence: string;
 }
 
-const ExampleBlock: FC<ExampleBlockProps> = ({phrase}) => {
+const ExampleBlock: FC<ExampleBlockProps> = ({sentence: phrase}) => {
   return (
     <ExampleBlockDiv>
       <img src={man} alt="" />

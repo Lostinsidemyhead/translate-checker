@@ -68,7 +68,7 @@ function App() {
         Translate this sentence
       </Header>
       <Spacer height="56px;" />
-      <ExampleBlock phrase={sentences[sentenceCounter]?.ru} />
+      <ExampleBlock sentence={sentences[sentenceCounter]?.ru} />
       <Spacer height="50px;" />
       <WordsFields
         sentence={currentSentence}
