@@ -13,7 +13,7 @@ const ExampleBlock: FC<ExampleBlockProps> = ({ sentence }) => {
       <img src={man} alt="" />
       <Phrase phrase={sentence} />
     </ExampleBlockDiv>
-  )
-}
+  );
+};
 
 export default ExampleBlock;

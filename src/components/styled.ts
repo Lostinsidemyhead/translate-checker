@@ -111,8 +111,7 @@ export const ButtonDiv = styled.button<ButtonProps>`
   cursor: pointer;
   &:active {
     background: linear-gradient(91.2deg, #ffffff 0%, #f2f2f2 100%);
-    box-shadow: inset -2px -4px 12px #ffffff,
-      inset 2px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: inset -2px -4px 12px #ffffff, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
   }
   margin: auto;
   color: ${(props) => (props.isEnable ? '#000000' : '#00000034')};

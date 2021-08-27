@@ -10,15 +10,20 @@ interface WordsFieldsProps {
   updateShowingNotification(show: boolean): void;
 }
 
-const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, updateButtonEnabled, updateShowingNotification }) => {
+const WordsFields: React.FC<WordsFieldsProps> = ({
+  sentence,
+  updateUserAnswer,
+  updateButtonEnabled,
+  updateShowingNotification,
+}) => {
   const [fields, setFields] = useState<Field[]>([]);
   const [sourceField, setSourceField] = useState<Field>();
   const [currentWord, setCurrentWord] = useState<Word>();
 
   useEffect(() => {
     setFields([
-      { name: "new", words: [] },
-      { name: "origin", words: getWordList(sentence.en) }
+      { name: 'new', words: [] },
+      { name: 'origin', words: getWordList(sentence.en) },
     ]);
   }, [sentence]);
 
@@ -33,17 +38,13 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, u
     updateShowingNotification(false);
   }
 
-  function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
-  }
+  function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {}
 
   function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
-
   }
 
-  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {
-
-  }
+  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {}
 
   function dropHandler(e: React.DragEvent<HTMLDivElement>, targetField: Field, hoveredWord: Word) {
     e.preventDefault();
@@ -55,15 +56,17 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, u
     const underCurrentIndex = targetField.words.indexOf(hoveredWord);
     targetField.words.splice(underCurrentIndex + 1, 0, currentWord);
 
-    setFields(fields.map(itField => {
-      if (itField.name === targetField.name) {
-        return targetField;
-      }
-      if (itField.name === sourceField.name) {
-        return sourceField;
-      }
-      return itField;
-    }));
+    setFields(
+      fields.map((itField) => {
+        if (itField.name === targetField.name) {
+          return targetField;
+        }
+        if (itField.name === sourceField.name) {
+          return sourceField;
+        }
+        return itField;
+      })
+    );
   }
 
   function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: Field) {
@@ -74,27 +77,29 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, u
     const currentIndex = sourceField.words.indexOf(currentWord);
     sourceField.words.splice(currentIndex, 1);
 
-    setFields(fields.map(itField => {
-      if (itField.name === field.name) {
-        return field;
-      }
-      if (itField.name === sourceField.name) {
-        return sourceField;
-      }
-      return itField;
-    }));
+    setFields(
+      fields.map((itField) => {
+        if (itField.name === field.name) {
+          return field;
+        }
+        if (itField.name === sourceField.name) {
+          return sourceField;
+        }
+        return itField;
+      })
+    );
   }
 
   return (
     <div>
-      {sentence
-        ?
+      {sentence ? (
         <div>
           <Lines>
             <UserField
               onDragOver={(e) => dragOverHandler(e)}
-              onDrop={(e) => dropOnEmptyFieldHandler(e, fields[0])}>
-              {fields[0]?.words.map((word) =>
+              onDrop={(e) => dropOnEmptyFieldHandler(e, fields[0])}
+            >
+              {fields[0]?.words.map((word) => (
                 <WordDiv
                   key={word.id}
                   draggable
@@ -106,15 +111,16 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, u
                 >
                   {word.word}
                 </WordDiv>
-              )}
+              ))}
             </UserField>
           </Lines>
 
           <Spacer height="50px" />
           <OriginField
             onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropOnEmptyFieldHandler(e, fields[1])}>
-            {fields[1]?.words.map((word) =>
+            onDrop={(e) => dropOnEmptyFieldHandler(e, fields[1])}
+          >
+            {fields[1]?.words.map((word) => (
               <WordDiv
                 key={word.id}
                 draggable
@@ -126,14 +132,14 @@ const WordsFields: React.FC<WordsFieldsProps> = ({ sentence, updateUserAnswer, u
               >
                 {word.word}
               </WordDiv>
-            )}
+            ))}
           </OriginField>
         </div>
-        :
+      ) : (
         <div>Loading...</div>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default WordsFields;

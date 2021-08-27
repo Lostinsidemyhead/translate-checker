@@ -12,20 +12,17 @@ export const getWordList = (phrase: string): Word[] => {
   return wordList;
 };
 
-export const speechSentence = async (
-  sentence: string,
-  speaker: SpeechSynthesis,
-) => {
+// eslint-disable-next-line no-undef
+export const speechSentence = async (sentence: string, speaker: SpeechSynthesis) => {
   if (speaker.speaking) return;
 
   const msg = new SpeechSynthesisUtterance(sentence);
   const voices = speaker.getVoices();
-  msg.voice = voices.filter(
-    (voice) => voice.name === 'Google UK English Male',
-  )[0];
+  msg.voice = voices.filter((voice) => voice.name === 'Google UK English Male')[0];
   speaker.speak(msg);
 
+  // eslint-disable-next-line consistent-return
   return new Promise((resolve) => {
-    msg.onend = () => resolve('');
+    msg.onend = () => resolve('done');
   });
 };

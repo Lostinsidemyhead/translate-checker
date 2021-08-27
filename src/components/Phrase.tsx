@@ -10,7 +10,7 @@ const Phrase: FC<PhraseProps> = ({ phrase }) => {
     <PhraseBorder>
       <PhraseWrapper>{phrase}</PhraseWrapper>
     </PhraseBorder>
-  )
-}
+  );
+};
 
 export default Phrase;
