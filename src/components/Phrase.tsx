@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { PhraseBorder, PhraseWrapper } from './styled';
 
 interface PhraseProps {
@@ -8,9 +8,7 @@ interface PhraseProps {
 const Phrase: FC<PhraseProps> = ({ phrase }) => {
   return (
     <PhraseBorder>
-      <PhraseWrapper>
-        {phrase}
-      </PhraseWrapper>
+      <PhraseWrapper>{phrase}</PhraseWrapper>
     </PhraseBorder>
   )
 }

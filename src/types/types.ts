@@ -6,7 +6,7 @@ export interface Sentence {
 export interface Word {
   id: number;
   word: string;
-} 
+}
 
 export interface Field {
   name: string;

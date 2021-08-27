@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 import phraseBorder from '../images/phrase.svg';
 
 export const GlobalStyle = createGlobalStyle`
@@ -18,7 +17,7 @@ interface SpacerProps {
   height: string;
 }
 export const Spacer = styled.div<SpacerProps>`
-  height: ${props => props.height};
+  height: ${(props) => props.height};
 `;
 
 export const ButtonWrapper = styled.div`
@@ -34,7 +33,7 @@ export const AppWrapper = styled.div`
 export const WordGround = styled.div`
   width: 70px;
   height: 30px;
-  background: #E6E6E6;
+  background: #e6e6e6;
   box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
   border-radius: 13px;
 `;
@@ -42,7 +41,7 @@ export const WordGround = styled.div`
 export const WordDiv = styled.div`
   height: 28px;
   width: 68px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #c9c9c9;
   border-radius: 13px;
   box-shadow: 0px 8px 4px -6px rgba(34, 60, 80, 0.25);
@@ -67,11 +66,11 @@ export const UserField = styled.div`
 
 export const Lines = styled.div`
   display: inline-flex;
-  justify-content:center;
-  align-items:center;
-  
-  &:after{
-    content: "";
+  justify-content: center;
+  align-items: center;
+
+  &:after {
+    content: '';
     width: 484px;
     margin-left: -484px;
     height: 1px;
@@ -86,8 +85,8 @@ export const OriginField = styled.div`
   grid-column-gap: 10px;
   grid-row-gap: 15px;
   padding: 7px;
-  &:nth-child(n){
-    background: #E6E6E6;
+  &:nth-child(n) {
+    background: #e6e6e6;
     box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
     border-radius: 13px;
   }
@@ -101,8 +100,8 @@ export const ButtonDiv = styled.button<ButtonProps>`
   width: 470px;
   height: 68px;
   padding: 24px;
-  background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);  
-  box-shadow: -2px -4px 12px #FFFFFF, 2px 4px 8px rgba(0, 0, 0, 0.2);  
+  background: linear-gradient(91.2deg, #ffffff 0%, #f2f2f2 100%);
+  box-shadow: -2px -4px 12px #ffffff, 2px 4px 8px rgba(0, 0, 0, 0.2);
   border: none;
   border-radius: 88px;
   font-family: Roboto-Bold;
@@ -111,11 +110,12 @@ export const ButtonDiv = styled.button<ButtonProps>`
   text-align: center;
   cursor: pointer;
   &:active {
-    background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);
-    box-shadow: inset -2px -4px 12px #FFFFFF, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(91.2deg, #ffffff 0%, #f2f2f2 100%);
+    box-shadow: inset -2px -4px 12px #ffffff,
+      inset 2px 4px 8px rgba(0, 0, 0, 0.2);
   }
   margin: auto;
-  color:  ${props => props.isEnable ? "#000000" : "#00000034"};
+  color: ${(props) => (props.isEnable ? '#000000' : '#00000034')};
 `;
 
 export const ExampleBlockDiv = styled.div`
@@ -128,7 +128,7 @@ export const HeaderDiv = styled.div`
   font-size: 36px;
   line-height: 42px;
   color: #252525;
-  text-shadow: -2px -4px 3px #FFFFFF, 2px 4px 3px rgba(0, 0, 0, 0.25);
+  text-shadow: -2px -4px 3px #ffffff, 2px 4px 3px rgba(0, 0, 0, 0.25);
 `;
 
 interface NotificationProps {
@@ -142,10 +142,11 @@ export const NotificationWrapper = styled.div<NotificationProps>`
   font-size: 24px;
   line-height: 28px;
   text-align: center;
-  color: ${props => props.isValid ? "#03C03C" : "#FF0000"};
-  text-shadow:  ${props => props.isValid
-    ? "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(91, 13, 13, 0.5)"
-    : "-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(13, 91, 55, 0.5)"};
+  color: ${(props) => (props.isValid ? '#03C03C' : '#FF0000')};
+  text-shadow: ${(props) =>
+    props.isValid
+      ? '-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(91, 13, 13, 0.5)'
+      : '-1px -2px 2px #FFFFFF, 1px 2px 2px rgba(13, 91, 55, 0.5)'};
 `;
 
 export const PhraseBorder = styled.div`
