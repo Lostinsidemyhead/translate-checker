@@ -54,6 +54,7 @@ function App() {
       setIsAnswerCorrect(true);
 
       await speechSentence(currentSentence.en, speaker);
+      if (!sentences[sentenceCounter + 1]) return;
 
       setCurrentSentence(sentences[sentenceCounter + 1]);
       setSentenceCounter(sentenceCounter + 1);
