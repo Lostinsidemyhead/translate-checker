@@ -12,7 +12,7 @@ export const getWordList = (phrase: string): Word[] => {
   return wordList;
 };
 
-// eslint-disable-next-line no-undef
+/* global SpeechSynthesis */
 export const speechSentence = async (sentence: string, speaker: SpeechSynthesis) => {
   if (speaker.speaking) return;
 
@@ -21,8 +21,7 @@ export const speechSentence = async (sentence: string, speaker: SpeechSynthesis)
   msg.voice = voices.filter((voice) => voice.name === 'Google UK English Male')[0];
   speaker.speak(msg);
 
-  // eslint-disable-next-line consistent-return
-  return new Promise((resolve) => {
+  await new Promise((resolve) => {
     msg.onend = () => resolve('done');
   });
 };
