@@ -52,14 +52,17 @@ export const WordDiv = styled.div`
   cursor: pointer;
 `;
 
-export const UserField = styled.div`
-  min-height: 76px;
+export const FieldWrapper = styled.div`
+  min-height: 75px;
   width: 470px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 15px;
   padding: 7px;
+`;
+
+export const UserField = styled.div`
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
 `;
@@ -79,12 +82,6 @@ export const Lines = styled.div`
 `;
 
 export const OriginField = styled.div`
-  min-height: 75px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 15px;
-  padding: 7px;
   &:nth-child(n) {
     background: #e6e6e6;
     box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Field, Sentence, Word } from '../types/types';
+import { WordsField, Sentence, Word } from '../types/types';
 import { getWordList } from '../utils/utils';
-import { Spacer, UserField, WordDiv, OriginField, Lines } from './styled';
+import Field from './Field';
+import { Spacer, UserField, OriginField, Lines } from './styled';
 
 interface WordsFieldsProps {
   sentence: Sentence;
@@ -16,9 +17,18 @@ const WordsFields: React.FC<WordsFieldsProps> = ({
   updateButtonEnabled,
   updateShowingNotification,
 }) => {
-  const [fields, setFields] = useState<Field[]>([]);
-  const [sourceField, setSourceField] = useState<Field>();
-  const [currentWord, setCurrentWord] = useState<Word>();
+  const [fields, setFields] = useState<WordsField[]>([]);
+  const [sourceField, setSourceField] = useState<WordsField>();
+  const [draggedWord, setDraggedWord] = useState<Word>();
+
+  const updateSourceField = (aSourceField: WordsField) => {
+    setSourceField(aSourceField);
+    updateShowingNotification(false);
+  };
+
+  const updateDraggedWord = (aDraggedWord: Word) => {
+    setDraggedWord(aDraggedWord);
+  };
 
   useEffect(() => {
     setFields([
@@ -32,30 +42,8 @@ const WordsFields: React.FC<WordsFieldsProps> = ({
     updateButtonEnabled(fields[0]?.words.length > 0);
   }, [fields[0]?.words.length]);
 
-  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, field: Field, word: Word) {
-    setSourceField(field);
-    setCurrentWord(word);
-    updateShowingNotification(false);
-  }
-
-  function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {}
-
-  function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-  }
-
-  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {}
-
-  function dropHandler(e: React.DragEvent<HTMLDivElement>, targetField: Field, hoveredWord: Word) {
-    e.preventDefault();
-    if (!currentWord || !sourceField) return;
-
-    const currentIndex = sourceField.words.indexOf(currentWord);
-    sourceField.words.splice(currentIndex, 1);
-
-    const underCurrentIndex = targetField.words.indexOf(hoveredWord);
-    targetField.words.splice(underCurrentIndex + 1, 0, currentWord);
-
+  const updateFields = (targetField: WordsField) => {
+    if (!targetField || !sourceField) return;
     setFields(
       fields.map((itField) => {
         if (itField.name === targetField.name) {
@@ -67,72 +55,34 @@ const WordsFields: React.FC<WordsFieldsProps> = ({
         return itField;
       })
     );
-  }
-
-  function dropOnEmptyFieldHandler(e: React.DragEvent<HTMLDivElement>, field: Field) {
-    if (!currentWord || !sourceField) return;
-    if (field.words.includes(currentWord)) return;
-
-    field.words.push(currentWord);
-    const currentIndex = sourceField.words.indexOf(currentWord);
-    sourceField.words.splice(currentIndex, 1);
-
-    setFields(
-      fields.map((itField) => {
-        if (itField.name === field.name) {
-          return field;
-        }
-        if (itField.name === sourceField.name) {
-          return sourceField;
-        }
-        return itField;
-      })
-    );
-  }
+  };
 
   return (
     <div>
       {sentence ? (
         <div>
           <Lines>
-            <UserField
-              onDragOver={(e) => dragOverHandler(e)}
-              onDrop={(e) => dropOnEmptyFieldHandler(e, fields[0])}
-            >
-              {fields[0]?.words.map((word) => (
-                <WordDiv
-                  key={word.id}
-                  draggable
-                  onDragStart={(e) => dragStartHandler(e, fields[0], word)}
-                  onDragLeave={(e) => dragLeaveHandler(e)}
-                  onDragOver={(e) => dragOverHandler(e)}
-                  onDragEnd={(e) => dragEndHandler(e)}
-                  onDrop={(e) => dropHandler(e, fields[0], word)}
-                >
-                  {word.word}
-                </WordDiv>
-              ))}
+            <UserField>
+              <Field
+                field={fields[0]}
+                updateSourceField={updateSourceField}
+                updateDraggedWord={updateDraggedWord}
+                sourceField={sourceField}
+                draggedWord={draggedWord}
+                updateFields={updateFields}
+              />
             </UserField>
           </Lines>
-
           <Spacer height="50px" />
-          <OriginField
-            onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropOnEmptyFieldHandler(e, fields[1])}
-          >
-            {fields[1]?.words.map((word) => (
-              <WordDiv
-                key={word.id}
-                draggable
-                onDragStart={(e) => dragStartHandler(e, fields[1], word)}
-                onDragLeave={(e) => dragLeaveHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDrop={(e) => dropHandler(e, fields[1], word)}
-              >
-                {word.word}
-              </WordDiv>
-            ))}
+          <OriginField>
+            <Field
+              field={fields[1]}
+              updateSourceField={updateSourceField}
+              updateDraggedWord={updateDraggedWord}
+              sourceField={sourceField}
+              draggedWord={draggedWord}
+              updateFields={updateFields}
+            />
           </OriginField>
         </div>
       ) : (

@@ -8,7 +8,7 @@ export interface Word {
   word: string;
 }
 
-export interface Field {
+export interface WordsField {
   name: string;
   words: Word[];
 }
