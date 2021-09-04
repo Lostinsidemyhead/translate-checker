@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GridContextProvider, GridItem, move, swap } from 'react-grid-dnd';
 import { Word } from '../types/types';
-import { getWordList } from '../utils/utils';
+import { getWordList, sortOrigin } from '../utils/utils';
 import {
   Spacer,
   WordDiv,
@@ -42,7 +42,7 @@ const DragAndDrop: React.FC<DnDProps> = ({
     const list = [];
     const count = Math.ceil(getWordList(sentence).length / 6) * 6;
     for (let i = 0; i < count; i++) {
-      list.push('');
+      list.push(i.toString());
     }
     return list;
   }
@@ -62,13 +62,24 @@ const DragAndDrop: React.FC<DnDProps> = ({
     updateShowingNotification(false);
     if (sourceId !== 'newField' && sourceId !== 'originField') return;
 
+    if (sourceId === 'originField' && !targetId) {
+      const result = swap(words[sourceId], sourceIndex, targetIndex);
+      setWords({ ...words, [sourceId]: sortOrigin(result) });
+      return;
+    }
+
     if (targetId) {
       if (targetId !== 'newField' && targetId !== 'originField') return;
 
       const result = move(words[sourceId], words[targetId], sourceIndex, targetIndex);
       setWords({ ...words, [sourceId]: result[0], [targetId]: result[1] });
+
+      if (targetId === 'originField') {
+        setWords({ ...words, [sourceId]: result[0], [targetId]: sortOrigin(result[1]) });
+      }
       return;
     }
+
     const result = swap(words[sourceId], sourceIndex, targetIndex);
     setWords({ ...words, [sourceId]: result });
   };
@@ -93,8 +104,8 @@ const DragAndDrop: React.FC<DnDProps> = ({
           </GridItem>
         ))}
         <Grounds>
-          {grounds.map((i) => (
-            <WordGround />
+          {grounds.map((ground) => (
+            <WordGround key={ground} />
           ))}
         </Grounds>
       </StyledOriginDnDField>

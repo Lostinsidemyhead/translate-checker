@@ -25,3 +25,16 @@ export const speechSentence = async (sentence: string, speaker: SpeechSynthesis)
     msg.onend = () => resolve('done');
   });
 };
+
+export const sortOrigin = (arr: Word[]) => {
+  const res = arr.sort((a, b) => {
+    if (a.id < b.id) {
+      return -1;
+    }
+    if (a.id > b.id) {
+      return 1;
+    }
+    return 0;
+  });
+  return res;
+};
