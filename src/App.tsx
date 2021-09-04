@@ -36,7 +36,6 @@ function App() {
   }, []);
 
   const updateUserAnswer = (words: Word[]) => {
-    console.log(words);
     setUserAnswer(words);
   };
   const updateButtonEnabled = (isEnabled: boolean) => {
@@ -49,10 +48,6 @@ function App() {
   const check = async () => {
     setShowNotification(true);
     const words = userAnswer.map((word) => word.word);
-
-    console.log(words, 1);
-
-    console.log(currentSentence.en);
 
     const resultIsCorrect = currentSentence.en === words.join(' ');
     if (resultIsCorrect) {
