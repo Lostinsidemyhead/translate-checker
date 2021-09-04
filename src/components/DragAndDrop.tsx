@@ -51,7 +51,7 @@ const DragAndDrop: React.FC<DnDProps> = ({
     updateUserAnswer(words.newField);
     updateButtonEnabled(words.newField.length > 0);
     setGrounds(getEmptyList());
-  }, [words.newField.length]);
+  }, [words.newField]);
 
   const onChange = (
     sourceId: string,
