@@ -24,7 +24,6 @@ export default class SentencesService {
         }
       `,
     });
-
     return response.data?.data?.sentenceAll;
   }
 }

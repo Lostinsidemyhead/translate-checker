@@ -1,8 +1,41 @@
+/**
+ * Just for save on git!
+ * Version drag and drop with manual handlers.
+ * Including the components: Fields.tsx, WordsFields.tsx.
+ */
 import React, { useEffect, useState } from 'react';
-import { WordsField, Sentence, Word } from '../types/types';
+import styled from 'styled-components';
+import { Sentence, Word, WordsField } from '../types/types';
 import { getWordList } from '../utils/utils';
 import Field from './Field';
-import { Spacer, UserField, OriginField, Lines } from './styled';
+import { Spacer } from './styled';
+
+const Lines = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:after {
+    content: '';
+    width: 484px;
+    margin-left: -484px;
+    height: 1px;
+    background: #4b4b4b;
+  }
+`;
+
+const UserField = styled.div`
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+`;
+
+const OriginField = styled.div`
+  &first-child::nth-child(n) {
+    background: #e6e6e6;
+    box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+  }
+`;
 
 interface WordsFieldsProps {
   sentence: Sentence;

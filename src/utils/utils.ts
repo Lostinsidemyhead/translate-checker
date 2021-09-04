@@ -6,7 +6,7 @@ export const getWordList = (phrase: string): Word[] => {
   const words = phrase.split(' ').sort();
   const wordList: Array<Word> = [];
   for (let i = 0; i < words.length; i++) {
-    const word: Word = { id: i, word: words[i] };
+    const word: Word = { id: `word-${i}`, word: words[i] };
     wordList.push(word);
   }
   return wordList;

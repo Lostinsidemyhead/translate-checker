@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import SentencesService from './api/SentencesService';
 import Button from './components/Button';
+import DragAndDrop from './components/DragAndDrop';
 import ExampleBlock from './components/ExampleBlock';
 import Header from './components/Header';
 import Notification from './components/Notification';
 import { AppWrapper, GlobalStyle, Spacer } from './components/styled';
-import WordsFields from './components/WordsFields';
 import { SENTENCES_FETCH_URL } from './config';
 import GlobalFonts from './fonts/fonts';
 import { Sentence, Word } from './types/types';
@@ -68,12 +68,12 @@ function App() {
     <AppWrapper>
       <GlobalStyle />
       <GlobalFonts />
-      <Header>Translate this sentence</Header>
+      <Header isBold={buttonEnabled}>Translate this sentence</Header>
       <Spacer height="56px;" />
-      <ExampleBlock sentence={sentences[sentenceCounter]?.ru} />
+      <ExampleBlock sentence={currentSentence?.ru} />
       <Spacer height="50px;" />
-      <WordsFields
-        sentence={currentSentence}
+      <DragAndDrop
+        sentence={currentSentence?.en}
         updateUserAnswer={updateUserAnswer}
         updateButtonEnabled={updateButtonEnabled}
         updateShowingNotification={updateShowingNotification}
@@ -82,6 +82,7 @@ function App() {
       <Button isEnable={buttonEnabled} onClick={check}>
         Check
       </Button>
+      <Spacer height="50px;" />
     </AppWrapper>
   );
 }

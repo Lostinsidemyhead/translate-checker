@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { GridDropZone } from 'react-grid-dnd';
 import phraseBorder from '../images/phrase.svg';
 
 export const GlobalStyle = createGlobalStyle`
@@ -9,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
       margin: 0;
       border: none;
-      background: #e5e5e5;
+      background: #eeeeee;
     }
 `;
 
@@ -30,8 +31,16 @@ export const AppWrapper = styled.div`
   margin-top: 10%;
 `;
 
+export const Grounds = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  flex-wrap: wrap;
+  grid-column-gap: 8px;
+  grid-row-gap: 16px;
+`;
+
 export const WordGround = styled.div`
-  width: 70px;
+  width: 68px;
   height: 30px;
   background: #e6e6e6;
   box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
@@ -52,41 +61,28 @@ export const WordDiv = styled.div`
   cursor: pointer;
 `;
 
-export const FieldWrapper = styled.div`
-  min-height: 75px;
+export const StyledNewDnDField = styled(GridDropZone)`
   width: 470px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  height: 76px;
   grid-column-gap: 10px;
-  grid-row-gap: 15px;
-  padding: 7px;
-`;
-
-export const UserField = styled.div`
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
+  padding: 7px 5px 7px 5px;
 `;
 
-export const Lines = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  &:after {
-    content: '';
-    width: 484px;
-    margin-left: -484px;
-    height: 1px;
-    background: #4b4b4b;
-  }
+export const StyledOriginDnDField = styled(GridDropZone)`
+  width: 470px;
+  height: 76px;
+  padding: 7px 0 7px 5px;
+  grid-column-gap: 10px;
 `;
 
-export const OriginField = styled.div`
-  &:nth-child(n) {
-    background: #e6e6e6;
-    box-shadow: inset 0px 8px 4px -6px rgba(0, 0, 0, 0.25);
-    border-radius: 13px;
-  }
+export const Line = styled.div`
+  width: 480px;
+  height: 1px;
+  background: #000;
+  margin-left: -5px;
+  margin-top: 38px;
 `;
 
 interface ButtonProps {
@@ -118,13 +114,16 @@ export const ExampleBlockDiv = styled.div`
   display: flex;
 `;
 
-export const HeaderDiv = styled.div`
-  font-family: Roboto-Bold;
-  font-weight: bold;
+interface HeaderProps {
+  isBold: boolean;
+}
+
+export const HeaderDiv = styled.div<HeaderProps>`
   font-size: 36px;
   line-height: 42px;
   color: #252525;
   text-shadow: -2px -4px 3px #ffffff, 2px 4px 3px rgba(0, 0, 0, 0.25);
+  font-family: ${(props) => (props.isBold ? 'Roboto-Bold' : 'Roboto-Regular')};
 `;
 
 interface NotificationProps {

@@ -1,6 +1,22 @@
+/**
+ * Just for save on git!
+ * Version drag and drop with manual handlers.
+ * Including the components: Fields.tsx, WordsFields.tsx.
+ */
 import React from 'react';
+import styled from 'styled-components';
+import { WordDiv } from './styled';
 import { WordsField, Word } from '../types/types';
-import { FieldWrapper, WordDiv } from './styled';
+
+const FieldWrapper = styled.div`
+  min-height: 75px;
+  width: 470px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+  padding: 7px;
+`;
 
 interface FieldProps {
   field: WordsField;
